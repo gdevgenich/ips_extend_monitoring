@@ -29,6 +29,7 @@ class ExtendClient(object):
             self.logger.debug("Response {resp}".format(resp=resp))
             self.access_token = json.loads(resp.content.decode()).get("access_token")
             self.refresh_token = json.loads(resp.content.decode()).get("refresh_token")
+        return self.access_token
 
     def refresh_access_token(self):
         raise NotImplementedError
@@ -52,21 +53,21 @@ class ExtendClient(object):
         self.logger.debug("Response {response}".format(response=resp))
         return json.loads(resp.content.decode()).get("deliveryMethod").get("uri")
 
-    def set_presence(self, presence, hp_user_id, resource):
+    def set_presence(self, presence, hp_user_uid, resource):
         headers = {"Content-Type": "application/json", "Authorization": "Bearer " + self.access_token}
         body = {"presence": presence}
-        url = self.user_presence_uri+hp_user_id+"?resource="+resource
+        url = self.user_presence_uri+hp_user_uid+"?resource="+resource
         req = requests.Request(method="PUT", headers=headers, json=body, url=url)
         self.logger.debug("Request {request}".format(request=requests))
         resp = requests.session().send(request=req.prepare())
         self.logger.debug("Response {response}".format(response=resp))
         return resp.content.decode()
 
-    def clear_presence(self, hp_user_id, resource):
+    def clear_presence(self, hp_user_uid, resource):
         headers = {"Content-Type": "application/json", "Authorization": "Bearer " + self.access_token}
-        url = self.user_presence_uri+hp_user_id+"?resource="+resource
+        url = self.user_presence_uri+hp_user_uid+"?resource="+resource
         req = requests.Request(method="DELETE", headers=headers, url=url)
         self.logger.debug("Request {request}".format(request=requests))
         resp = requests.session().send(request=req.prepare())
         self.logger.debug("Response {response}".format(response=resp))
-        print(resp.content.decode())
+        return resp.content.decode()
