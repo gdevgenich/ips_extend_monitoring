@@ -1,7 +1,7 @@
 from signalrcore.hub_connection_builder import HubConnectionBuilder
 from extend_client import ExtendClient
 import logging
-import asyncio
+import json
 
 logger = logging.getLogger("signalr_client")
 
@@ -13,14 +13,6 @@ class SignalRClient(object):
         self.connected = False
         self.messages = list()
         self.__connection_reattempt_count = 0
-
-    def __connection_reattempt(self):
-        if self.__connection_reattempt_count >= 5:
-            self.stop()
-            raise RuntimeError("Can't connect to SignalR server")
-        else:
-            self.__connection_reattempt_count += 1
-            self.hub_connection.start()
 
     def create_hub_connection(self, logging_level=logging.DEBUG, logging_handler=logging.StreamHandler()):
         self.extend_client.get_access_token()
@@ -37,30 +29,27 @@ class SignalRClient(object):
                                             "max_attempts": 5
                                           }).build()
 
-    def register_message(self, message):
-        self.messages.append(message)
-        print(type(message))
+    def register_message(self, *args):
+        for el in args:
+            for presence in el:
+                self.messages.append(presence)
 
     def has_presence(self, presence):
         for msg in self.messages:
             if msg.get("presenceState") == presence:
                 return None
-        return "No expected presence"
+        return "No expected presence {exp} in {real}".format(exp=presence, real=self.messages)
 
     def set_connected(self):
         self.connected = True
         logger.info("Connection ready")
 
-    def start(self, block=True):
+    def start(self):
         if self.hub_connection is None:
             self.create_hub_connection()
-        self.hub_connection.on_close(self.__connection_reattempt)
         self.hub_connection.on_open(lambda: self.set_connected())
         self.hub_connection.on("OnPresenceEvent", self.register_message)
         self.hub_connection.start()
-        if block:
-            while not self.connected:
-                asyncio.get_event_loop().run_until_complete(asyncio.sleep(1))
 
     def stop(self):
         self.hub_connection.on_close(lambda: logger.info("Close connection"))
