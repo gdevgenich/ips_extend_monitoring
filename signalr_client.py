@@ -1,6 +1,7 @@
 from signalrcore.hub_connection_builder import HubConnectionBuilder
 from extend_client import ExtendClient
 import logging
+import logging.handlers
 import json
 
 logger = logging.getLogger("signalr_client")
@@ -14,7 +15,8 @@ class SignalRClient(object):
         self.messages = list()
         self.__connection_reattempt_count = 0
 
-    def create_hub_connection(self, logging_level=logging.DEBUG, logging_handler=logging.StreamHandler()):
+    def create_hub_connection(self, logging_level=logging.DEBUG,
+                              logging_handler=logging.handlers.SysLogHandler(address="/dev/log")):
         self.extend_client.get_access_token()
         uri = self.extend_client.get_subscribe_uri()
         self.hub_connection = HubConnectionBuilder().with_url(uri,

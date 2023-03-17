@@ -5,8 +5,8 @@ from signalr_client import SignalRClient
 import json
 import graphyte
 from mail_reporter import send_report
-from json import loads
-
+from configparser2.yaml import loads
+import logging.handlers
 
 class IPSExtendChecker(object):
 
@@ -66,6 +66,17 @@ class IPSExtendChecker(object):
             self.signalr_client.start()
             asyncio.get_event_loop().run_until_complete(asyncio.sleep(5))
 
+    def set_logging(self):
+        formatter = logging.Formatter(
+            fmt="hpbx_ips_monitoring: %(levelname)s | {server} |%(message)s".format(server=self.section_name))
+        for logger_name in ["asyncio", "extend_client"]:
+            logger = logging.getLogger(logger_name)
+            logger.setLevel(logging.DEBUG)
+            file_handler = logging.handlers.SysLogHandler(address="/dev/log")
+            file_handler.setFormatter(formatter)
+            logger.addHandler(file_handler)
+            logger.propagate = False
+
     def check(self):
         self.extend_client.clear_presence(hp_user_uid=self.hp_user_uid, resource=self.client_resource)
         asyncio.get_event_loop().run_until_complete(asyncio.sleep(10))
@@ -80,7 +91,7 @@ class IPSExtendChecker(object):
             asyncio.get_event_loop().run_until_complete(asyncio.sleep(10))
             self.error_message = self.check_extend_presence(expected_presence="offline")
         if self.error_message is None:
-            self.error_message = self.signalr_client.has_presence("agent_busy1")
+            self.error_message = self.signalr_client.has_presence("agent_busy")
         if self.error_message is not None:
             raise RuntimeError(self.error_message)
 
