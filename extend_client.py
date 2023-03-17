@@ -5,18 +5,15 @@ import logging
 
 class ExtendClient(object):
 
-    def __init__(self, client_id, client_secret, token_url=None, user_presence_uri=None, subscribe_url=None):
+    def __init__(self, client_id, client_secret, token_url, user_presence_uri, subscribe_url):
         self.client_id = client_id
         self.client_secret = client_secret
         self.access_token = None
         self.refresh_token = None
         self.logger = logging.getLogger("extend_client")
-        self.token_url = token_url if token_url is not None else "https://login.intermedia.net/user/connect/token"
-        self.user_presence_uri = user_presence_uri if user_presence_uri is not None else \
-            "https://api.intermedia.net/messaging/v1/presence/accounts/_me/users/"
-        self.subscribe_url = subscribe_url if subscribe_url is not None else \
-            "https://api.intermedia.net/messaging/v1/subscriptions/accounts/_me/users/_all"
-
+        self.token_url = token_url
+        self.user_presence_uri = user_presence_uri
+        self.subscribe_url = subscribe_url
 
     def get_access_token(self):
         if self.access_token is None:
