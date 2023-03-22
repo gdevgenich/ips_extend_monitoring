@@ -1,0 +1,14 @@
+email_notification:
+  emails: dgirdyuk@intermedia.net
+graphyte:
+  host: example.com
+  port: '456'
+urls:
+  token_url: "https://login.intermedia.net/user/connect/token"
+  user_presence_ulr: "https://api.intermedia.net/messaging/v1/presence/accounts/_me/users/"
+  subscribe_url: "https://api.intermedia.net/messaging/v1/subscriptions/accounts/_me/users/_all"
+testing:
+  client_id: "15kWI7uR2ESBLXFtbXNI6g"
+  client_secret: "vf1kxYHsy7mff6iekFX1K6505W0NSfHMXbPBfcK04HQ"
+  hp_user_uid: "7531e600-7dbc-4f6d-bcfd-c2ff50c1f695"
+  client_resource: "a8f50e3e-c8de-45f3-80e5-f73398f38a95"
