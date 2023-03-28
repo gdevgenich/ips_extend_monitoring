@@ -68,7 +68,7 @@ class IPSExtendChecker(object):
 
     def set_logging(self):
         formatter = logging.Formatter(
-            fmt="hpbx_ips_monitoring: %(levelname)s | {server} |%(message)s".format(server=self.section_name))
+            fmt="extend_ips_monitoring: %(levelname)s | {server} |%(message)s".format(server=self.section_name))
         for logger_name in ["asyncio", "extend_client"]:
             logger = logging.getLogger(logger_name)
             logger.setLevel(logging.DEBUG)
