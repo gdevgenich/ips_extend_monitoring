@@ -1,0 +1,52 @@
+image: debian:11
+stages:
+  - build
+  - aptrepo
+
+.deb11_defaults:
+  image: debian:11
+  variables:
+    DEB_OS_PREFIX: deb11
+    DISTR: bullseye
+    APT_LOCAL_REPO: imedia-hpbx-testing-${DISTR}
+    APT_DIR: imedia-hpbx-testing-${DISTR}
+    APT_REPO: imedia-hpbx-testing
+    DEB_ARCH: amd64
+    DEVEMAIL: dgirdyuk@intermedia.net
+    DEB_USER: root
+    DEB_GROUP: root
+    PYTHON_BINARY: python3.9
+
+.ips_extend_monitoring-default:build:
+  stage: build
+  tags: [hpbx]
+  before_script:
+    - apt-get update
+    - apt-get install git curl gnupg2 ruby ruby-dev rubygems build-essential -y
+  after_script:
+    - ./makeall.sh
+  artifacts:
+    expire_in: 1 days
+    paths:
+      - "*deb" 
+
+.ips_extend_monitoring-default:aptrepo:
+  stage: aptrepo
+  tags: [hpbx]
+  script:
+    - apt-get update
+    - apt-get install curl -y
+    - ./pushdeb.sh
+
+ips_extend_monitoring-deb11:build:
+  script:
+    - gem install --no-document fpm -v 1.14.0
+  extends: 
+    - .deb11_defaults
+    - .ips_extend_monitoring-default:build
+
+ips_extend_monitoring-deb11:aptrepo:
+  extends: 
+    - .deb11_defaults
+    - .ips_extend_monitoring-default:aptrepo
+
