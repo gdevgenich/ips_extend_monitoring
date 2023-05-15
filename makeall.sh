@@ -3,7 +3,7 @@
 set -e 
 set -x
 
-DEB_DATA="extend_client.py ips_extend_checker.py ips_extend_mon.py mail_reporter.py signalr_client.py"
+DEB_DATA="extend_client.py ips_extend_checker.py ips_extend_mon.py mail_reporter.py signalr_client.py start.sh"
 DEB_DIRECTORY="opt/ips_extend_monitoring"
 DEB_PACKAGE_NAME="ips_extend_monitoring"
 DEB_PACKAGE_VERSION="$(cat version)"
