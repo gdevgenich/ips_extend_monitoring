@@ -46,11 +46,14 @@ class IPSExtendChecker(object):
         self.client_resource = account.get("client_resource")
 
     def check_extend_presence(self, expected_presence):
-        presence = json.loads(self.extend_client.get_user_presence(hp_user_uid=self.hp_user_uid))
-        if presence.get("presence") == expected_presence:
-            return None
-        else:
-            return "Expected {exp} but get {real}".format(exp=expected_presence, real=presence.get("presence"))
+        try:
+            presence = json.loads(self.extend_client.get_user_presence(hp_user_uid=self.hp_user_uid))
+            if presence.get("presence") == expected_presence:
+                return None
+            else:
+                return f"Expected {expected_presence} but get {presence.get('presence')}"
+        except:
+            return "Exception happen during extend presence check"
 
     def clients_init(self):
         self.extend_client = ExtendClient(client_id=self.client_id, client_secret=self.client_secret,
@@ -69,7 +72,7 @@ class IPSExtendChecker(object):
     def set_logging(self):
         formatter = logging.Formatter(
             fmt="extend_ips_monitoring: %(levelname)s | {server} |%(message)s".format(server=self.section_name))
-        for logger_name in ["asyncio", "extend_client"]:
+        for logger_name in ["asyncio", "extend_client", "SignalRCoreClient"]:
             logger = logging.getLogger(logger_name)
             logger.setLevel(logging.DEBUG)
             file_handler = logging.handlers.SysLogHandler(address="/dev/log")
@@ -92,8 +95,6 @@ class IPSExtendChecker(object):
             self.error_message = self.check_extend_presence(expected_presence="offline")
         if self.error_message is None:
             self.error_message = self.signalr_client.has_presence("agent_busy")
-        if self.error_message is not None:
-            raise RuntimeError(self.error_message)
 
     def send_report(self):
         if self.error_message is not None:
