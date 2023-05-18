@@ -1,6 +1,6 @@
 from ips_extend_checker import IPSExtendChecker
 from sys import argv
-
+import traceback
 
 if __name__ == "__main__":
     name = argv[1] if len(argv) > 1 else "testing"
@@ -12,5 +12,5 @@ if __name__ == "__main__":
         ips_extend_checker.set_logging()
         ips_extend_checker.check()
     except Exception as e:
-        pass
+        ips_extend_checker.error_message = str(e)
     ips_extend_checker.send_report()
