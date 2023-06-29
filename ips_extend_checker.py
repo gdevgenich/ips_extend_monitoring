@@ -51,7 +51,11 @@ class IPSExtendChecker(object):
             if presence.get("presence") == expected_presence:
                 return None
             else:
-                return f"Expected {expected_presence} but get {presence.get('presence')}"
+                asyncio.get_event_loop().run_until_complete(asyncio.sleep(5))
+                presence = json.loads(self.extend_client.get_user_presence(hp_user_uid=self.hp_user_uid))
+                if presence.get("presence") == expected_presence:
+                    return None
+            return f"Expected {expected_presence} but get {presence.get('presence')}"
         except:
             return "Exception happen during extend presence check"
 
@@ -75,7 +79,7 @@ class IPSExtendChecker(object):
         for logger_name in ["asyncio", "extend_client", "SignalRCoreClient"]:
             logger = logging.getLogger(logger_name)
             logger.setLevel(logging.DEBUG)
-            file_handler = logging.handlers.SysLogHandler(address="/dev/log")
+            file_handler = logging.StreamHandler() #handlers.SysLogHandler(address="/dev/log")
             file_handler.setFormatter(formatter)
             logger.addHandler(file_handler)
             logger.propagate = False
