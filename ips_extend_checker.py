@@ -79,7 +79,7 @@ class IPSExtendChecker(object):
         for logger_name in ["asyncio", "extend_client", "SignalRCoreClient"]:
             logger = logging.getLogger(logger_name)
             logger.setLevel(logging.DEBUG)
-            file_handler = logging.StreamHandler() #handlers.SysLogHandler(address="/dev/log")
+            file_handler = logging.handlers.SysLogHandler(address="/dev/log")
             file_handler.setFormatter(formatter)
             logger.addHandler(file_handler)
             logger.propagate = False
