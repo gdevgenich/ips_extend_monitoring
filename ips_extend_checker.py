@@ -51,7 +51,11 @@ class IPSExtendChecker(object):
             if presence.get("presence") == expected_presence:
                 return None
             else:
-                return f"Expected {expected_presence} but get {presence.get('presence')}"
+                asyncio.get_event_loop().run_until_complete(asyncio.sleep(5))
+                presence = json.loads(self.extend_client.get_user_presence(hp_user_uid=self.hp_user_uid))
+                if presence.get("presence") == expected_presence:
+                    return None
+            return f"Expected {expected_presence} but get {presence.get('presence')}"
         except:
             return "Exception happen during extend presence check"
 
