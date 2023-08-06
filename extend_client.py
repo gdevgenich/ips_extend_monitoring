@@ -21,7 +21,10 @@ class ExtendClient(object):
                     "client_secret": self.client_secret, "scope": "api.service.messaging"}
             headers = {"Content-Type": "application/x-www-form-urlencoded"}
             req = requests.Request(method="POST", headers=headers, data=body, url=self.token_url)
+            self.logger.debug(msg=f"SEND URL {req.url}")
+            self.logger.debug(msg=f"SEND body {req.json}")
             resp = requests.session().send(request=req.prepare())
+            self.logger.debug(msg=f"RECV {resp.content.decode()}")
             self.access_token = json.loads(resp.content.decode()).get("access_token")
             self.refresh_token = json.loads(resp.content.decode()).get("refresh_token")
         return self.access_token
@@ -33,7 +36,9 @@ class ExtendClient(object):
         headers = {"Content-Type": "application/x-www-form-urlencoded", "Authorization": "Bearer " + self.access_token}
         url = self.user_presence_uri+hp_user_uid
         req = requests.Request(method="GET", headers=headers, url=url)
+        self.logger.debug(msg=f"SEND URL {req.url}")
         resp = requests.session().send(request=req.prepare())
+        self.logger.debug(msg=f"RECV {resp.content.decode()}")
         return resp.content.decode()
 
     def get_subscribe_uri(self, ttl="00:02:00"):
@@ -41,7 +46,10 @@ class ExtendClient(object):
         body = {"events": ["*"], "ttl": ttl}
         req = requests.Request(method="POST", headers=headers, json=body,
                                url=self.subscribe_url)
+        self.logger.debug(msg=f"SEND URL {req.url}")
+        self.logger.debug(msg=f"SEND body {req.json}")
         resp = requests.session().send(request=req.prepare())
+        self.logger.debug(msg=f"RECV {resp.content.decode()}")
         return json.loads(resp.content.decode()).get("deliveryMethod").get("uri")
 
     def set_presence(self, presence, hp_user_uid, resource):
@@ -49,12 +57,17 @@ class ExtendClient(object):
         body = {"presence": presence}
         url = self.user_presence_uri+hp_user_uid+"?resource="+resource
         req = requests.Request(method="PUT", headers=headers, json=body, url=url)
+        self.logger.debug(msg=f"SEND URL {req.url}")
+        self.logger.debug(msg=f"SEND body {req.json}")
         resp = requests.session().send(request=req.prepare())
+        self.logger.debug(msg=f"RECV {resp.content.decode()}")
         return resp.content.decode()
 
     def clear_presence(self, hp_user_uid, resource):
         headers = {"Content-Type": "application/json", "Authorization": "Bearer " + self.access_token}
         url = self.user_presence_uri+hp_user_uid+"?resource="+resource
         req = requests.Request(method="DELETE", headers=headers, url=url)
+        self.logger.debug(msg=f"SEND URL {req.url}")
         resp = requests.session().send(request=req.prepare())
+        self.logger.debug(msg=f"RECV {resp.content.decode()}")
         return resp.content.decode()

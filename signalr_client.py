@@ -116,10 +116,15 @@ class SignalRClient(object):
         self.connected = True
         logger.info("Connection ready")
 
+    def reconnect(self):
+        logger.debug(msg="Connection lost. Try to reconnect.")
+        self.hub_connection.start()
+
     def start(self):
         if self.hub_connection is None:
             self.create_hub_connection()
         self.hub_connection.on_open(lambda: self.set_connected())
+        self.hub_connection.on_close(lambda: self.reconnect())
         self.hub_connection.on("OnPresenceEvent", self.register_message)
         self.hub_connection.start()
 
