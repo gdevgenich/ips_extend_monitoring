@@ -36,7 +36,7 @@ ls|grep "${DEB_ARCH}.deb"|while read l
   rm $l;
 done
 
-fpm   --name "$PACKAGE_NAME" \
+fpm   --name "$DEB_PACKAGE_NAME" \
       --version "$DEB_BUILD_NUMBER" \
       --architecture "${DEB_ARCH}" \
       --maintainer "${DEVEMAIL}" \
