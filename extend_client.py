@@ -38,6 +38,7 @@ class ExtendClient(object):
         req = requests.Request(method="GET", headers=headers, url=url)
         self.logger.debug(msg=f"SEND URL {req.url}")
         resp = requests.session().send(request=req.prepare())
+        self.logger.debug(msg=f"RECV HEADERS {resp.headers}")
         self.logger.debug(msg=f"RECV {resp.content.decode()}")
         return resp.content.decode()
 
@@ -49,6 +50,7 @@ class ExtendClient(object):
         self.logger.debug(msg=f"SEND URL {req.url}")
         self.logger.debug(msg=f"SEND body {req.json}")
         resp = requests.session().send(request=req.prepare())
+        self.logger.debug(msg=f"RECV HEADERS {resp.headers}")
         self.logger.debug(msg=f"RECV {resp.content.decode()}")
         return json.loads(resp.content.decode()).get("deliveryMethod").get("uri")
 
@@ -60,6 +62,7 @@ class ExtendClient(object):
         self.logger.debug(msg=f"SEND URL {req.url}")
         self.logger.debug(msg=f"SEND body {req.json}")
         resp = requests.session().send(request=req.prepare())
+        self.logger.debug(msg=f"RECV HEADERS {resp.headers}")
         self.logger.debug(msg=f"RECV {resp.content.decode()}")
         return resp.content.decode()
 
@@ -69,5 +72,6 @@ class ExtendClient(object):
         req = requests.Request(method="DELETE", headers=headers, url=url)
         self.logger.debug(msg=f"SEND URL {req.url}")
         resp = requests.session().send(request=req.prepare())
+        self.logger.debug(msg=f"RECV HEADERS {resp.headers}")
         self.logger.debug(msg=f"RECV {resp.content.decode()}")
         return resp.content.decode()
