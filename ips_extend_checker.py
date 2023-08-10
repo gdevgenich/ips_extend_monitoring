@@ -3,7 +3,6 @@ import asyncio
 from extend_client import ExtendClient
 from signalr_client import SignalRClient
 import json
-import graphyte
 from mail_reporter import send_report
 from configparser2.yaml import loads
 import logging.handlers
@@ -16,8 +15,6 @@ class IPSExtendChecker(object):
         self.res_file = "/var/tmp/monitoring/extend_{number}_sync".format(number=section_name)
 
         self.emails = None
-        self.graphyte_host = None
-        self.graphyte_port = None
         self.client_id = None
         self.client_secret = None
         self.hp_user_uid = None
@@ -34,8 +31,6 @@ class IPSExtendChecker(object):
             content = stream.read()
         res = loads(content)
         self.emails = res.get("email_notification").get("emails")
-        self.graphyte_host = res.get("graphyte").get("host")
-        self.graphyte_port = res.get("graphyte").get("port")
         self.token_url = res.get("urls").get("token_url")
         self.user_presence_url = res.get("urls").get("user_presence_ulr")
         self.subscribe_url = res.get("urls").get("subscribe_url")
