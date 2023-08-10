@@ -112,12 +112,3 @@ class IPSExtendChecker(object):
             test_res = open(self.res_file, mode="w")
             test_res.write("0")
             test_res.close()
-
-        try:
-            import socket
-            hostname = socket.gethostname().split(".")[0]
-            graphyte.init(host=self.graphyte_host, port=self.graphyte_port,
-                          prefix="apps.HPBXMon")
-            graphyte.send("{hostname}.status".format(hostname=hostname), 0.0, tags={"zzz_team": "hpbx"})
-        except Exception as e:
-            pass
