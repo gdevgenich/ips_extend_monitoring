@@ -51,7 +51,7 @@ fpm   --name "$DEB_PACKAGE_NAME" \
       --depends "${PYTHON_BINARY}-siplib = 4.0" \
       --depends "${PYTHON_BINARY}-step-manager = 2.12" \
       --depends "${PYTHON_BINARY}-waveproc = 2.11" \
-      --depends "${PYTHON_BINARY}-rmq-client = 2.5" \
+      --depends "${PYTHON_BINARY}-rmq-client >= 2.5" \
       --depends "${PYTHON_BINARY}-pika = 1.3.1" \
       --depends "sipmon = 2.10.0-1+deb11" \
       --depends "nodejs = 16.18.1-deb-1nodesource1" \
@@ -61,6 +61,6 @@ fpm   --name "$DEB_PACKAGE_NAME" \
       --depends "mailutils = 1:3.10-3+b1" \
       --deb-user $DEB_USER \
       --deb-group $DEB_GROUP \
-      --description "${PACKAGE_DESC}" \
+      --description "${DEB_PACKAGE_DESC}" \
       --deb-no-default-config-files \
       -t deb -s dir opt/ var/
