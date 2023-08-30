@@ -41,24 +41,17 @@ fpm   --name "$DEB_PACKAGE_NAME" \
       --architecture "${DEB_ARCH}" \
       --maintainer "${DEVEMAIL}" \
       --depends "${PYTHON_BINARY}-audio-functions = 2.1" \
-      --depends "${PYTHON_BINARY}-configparser2 >= 2.2" \
-      --depends "${PYTHON_BINARY}-context >= 1.4" \
-      --depends "${PYTHON_BINARY}-graphyte >= 1.7.1" \
+      --depends "${PYTHON_BINARY}-configparser2 = 2.2" \
+      --depends "${PYTHON_BINARY}-context = 1.4" \
       --depends "${PYTHON_BINARY}-monitoring-cf = 1.9" \
-      --depends "${PYTHON_BINARY}-pynetwork >= 2.3" \
+      --depends "${PYTHON_BINARY}-pynetwork = 2.3" \
       --depends "${PYTHON_BINARY}-reactor = 3.0" \
       --depends "${PYTHON_BINARY}-sipde-client = 2.4.4" \
       --depends "${PYTHON_BINARY}-siplib = 4.0" \
       --depends "${PYTHON_BINARY}-step-manager = 2.12" \
       --depends "${PYTHON_BINARY}-waveproc = 2.11" \
-      --depends "${PYTHON_BINARY}-rmq-client >= 2.5" \
+      --depends "${PYTHON_BINARY}-rmq-client = 2.5" \
       --depends "${PYTHON_BINARY}-pika = 1.3.1" \
-      --depends "sipmon = 2.10.0-1+deb11" \
-      --depends "nodejs = 16.18.1-deb-1nodesource1" \
-      --depends "sipde = 1.3.0-1+deb11" \
-      --depends "libpjproject = 2.13-5+deb11" \
-      --depends "ffmpeg >= 7:4.3.4-0+deb11u1" \
-      --depends "mailutils = 1:3.10-3+b1" \
       --deb-user $DEB_USER \
       --deb-group $DEB_GROUP \
       --description "${DEB_PACKAGE_DESC}" \
