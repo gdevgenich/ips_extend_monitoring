@@ -68,6 +68,9 @@ class IPSExtendChecker(object):
             self.signalr_client.start()
             asyncio.get_event_loop().run_until_complete(asyncio.sleep(5))
 
+    def clients_stop(self):
+        self.signalr_client.stop()
+
     def set_logging(self):
         formatter = logging.Formatter(
             fmt="extend_ips_monitoring: %(levelname)s | {server} |%(message)s".format(server=self.section_name))

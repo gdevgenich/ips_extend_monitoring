@@ -86,8 +86,7 @@ class SignalRClient(object):
         self.messages = list()
         self.__connection_reattempt_count = 0
 
-    def create_hub_connection(self, logging_level=logging.INFO,
-                              logging_handler=logging.handlers.SysLogHandler(address="/dev/log")):
+    def create_hub_connection(self):
         self.extend_client.get_access_token()
         uri = self.extend_client.get_subscribe_uri()
         self.hub_connection = HubConnectionBuilder().with_url(uri,
@@ -117,8 +116,7 @@ class SignalRClient(object):
         logger.info("Connection ready")
 
     def reconnect(self):
-        logger.debug(msg="Connection lost. Try to reconnect.")
-        self.hub_connection.start()
+        logger.debug(msg="Connection lost.")
 
     def start(self):
         if self.hub_connection is None:
