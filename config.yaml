@@ -7,13 +7,8 @@ urls:
   token_url: https://login.intermedia.net/user/connect/token
   user_presence_ulr: https://api.intermedia.net/messaging/v1/presence/accounts/_me/users/
   subscribe_url: https://api.intermedia.net/messaging/v1/subscriptions/accounts/_me/users/_all
-ips300:
-  client_id: pNHD2M3FXUK6MlFpTiBCQg
-  client_secret: m6kMNm0uJwAJJzwVQUmq1ORkc99xE9WnhLZI61fgbWI
-  hp_user_uid: 71816c30-402b-4484-998b-2f41f4baa776
-  client_resource: a8f50e3e-c8de-45f3-80e5-f73398f38a95
 testing:
-  client_id: l83jvLnfNk2Bip8Tuudaw
-  client_secret: JuVCtIUQ3CHCddWTHDa6vFRwaJNkdWhzOhhR7j3IBGI
-  hp_user_uid: 60cb7ffe-a2e6-4d97-8b08-7cc5c3cd3202
+  client_id: cNkAQFOJHE6aLCVVWnZPw
+  client_secret: lKV5ALCpsZ6salt4j1qUqm6t3VEGxsKIzRLwxSx0LXs
+  hp_user_uid: d7882566-727a-42df-873d-3815277056ed
   client_resource: a8f50e3e-c8de-45f3-80e5-f73398f38a95
