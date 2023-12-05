@@ -40,7 +40,7 @@ fpm   --name "$DEB_PACKAGE_NAME" \
       --version "$DEB_BUILD_NUMBER" \
       --architecture "${DEB_ARCH}" \
       --maintainer "${DEVEMAIL}" \
-      --depends "python-signalrcore" \
+      --depends "python3.9-signalrcore" \
       --depends "${PYTHON_BINARY}-audio-functions = 2.1" \
       --depends "${PYTHON_BINARY}-configparser2 = 2.2" \
       --depends "${PYTHON_BINARY}-context = 1.4" \
