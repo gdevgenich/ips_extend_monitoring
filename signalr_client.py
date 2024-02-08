@@ -127,7 +127,8 @@ class SignalRClient(object):
         self.hub_connection.start()
 
     def stop(self):
-        self.hub_connection.on_close(lambda: logger.info("Close connection"))
-        self.hub_connection.stop()
+        if self.hub_connection is not None:
+            self.hub_connection.on_close(lambda: logger.info("Close connection"))
+            self.hub_connection.stop()
 
 

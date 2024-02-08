@@ -47,8 +47,6 @@ fpm   --name "$DEB_PACKAGE_NAME" \
       --depends "${PYTHON_BINARY}-monitoring-cf = 1.9" \
       --depends "${PYTHON_BINARY}-pynetwork = 2.3" \
       --depends "${PYTHON_BINARY}-reactor = 3.0" \
-      --depends "${PYTHON_BINARY}-sipde-client = 2.4.4" \
-      --depends "${PYTHON_BINARY}-siplib = 4.0" \
       --depends "${PYTHON_BINARY}-step-manager = 2.12" \
       --depends "${PYTHON_BINARY}-waveproc = 2.11" \
       --depends "${PYTHON_BINARY}-rmq-client = 2.5" \
