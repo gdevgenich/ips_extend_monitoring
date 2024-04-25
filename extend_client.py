@@ -43,6 +43,8 @@ class ExtendClient(object):
         return resp.content.decode()
 
     def get_subscribe_uri(self, ttl="00:02:00"):
+        if self.access_token is None:
+            raise RuntimeError("Failed to obtain access token")
         headers = {"Content-Type": "application/json", "Authorization": "Bearer " + self.access_token}
         body = {"events": ["*"], "ttl": ttl}
         req = requests.Request(method="POST", headers=headers, json=body,
