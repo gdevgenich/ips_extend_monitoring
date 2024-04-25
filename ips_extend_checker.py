@@ -69,7 +69,10 @@ class IPSExtendChecker(object):
             asyncio.get_event_loop().run_until_complete(asyncio.sleep(5))
 
     def clients_stop(self):
-        self.signalr_client.stop()
+        try:
+            self.signalr_client.stop()
+        except Exception as e:
+            logging.warning(str(e))
 
     def set_logging(self):
         formatter = logging.Formatter(
