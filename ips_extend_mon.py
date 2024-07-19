@@ -8,8 +8,8 @@ if __name__ == "__main__":
 
     try:
         ips_extend_checker.read_data_from_config()
-        ips_extend_checker.clients_init()
         ips_extend_checker.set_logging()
+        ips_extend_checker.clients_init()
         ips_extend_checker.check()
     except Exception as e:
         ips_extend_checker.error_message = str(e)
